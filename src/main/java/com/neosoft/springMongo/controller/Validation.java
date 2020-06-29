@@ -9,6 +9,8 @@ import com.neosoft.springMongo.model.UserMaster;
 import com.neosoft.springMongo.requestEntity.UserMasterReqEntity;
 import com.neosoft.springMongo.responseEntity.UserMasterEntity;
 import com.neosoft.springMongo.service.UserDetailService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,7 +20,7 @@ import java.util.List;
 import java.util.regex.Pattern;
 
 public abstract class Validation {
-
+    private final Logger LOGGER = LoggerFactory.getLogger(Validation.class);
     private final UserDetailService userDetailService;
 
     @Autowired
@@ -33,6 +35,7 @@ public abstract class Validation {
      * @return boolean
      */
     public boolean valid(UserMasterEntity userMasterEntity){
+        LOGGER.info("Checking Validation");
         CustomException customException = new CustomException();
         List<String> errors = new ArrayList<>();
         if(!userNameValidator(userMasterEntity.getUserName())){
@@ -71,28 +74,37 @@ public abstract class Validation {
      */
     public boolean userNameValidator(String userName){
         Pattern userNamePattern = Pattern.compile(Regex.USERNAME);
-        return userNamePattern.matcher(userName).matches();
+        boolean check =userNamePattern.matcher(userName).matches();
+        LOGGER.info("UserName validation :"+check);
+        return check;
     }
 
     public boolean passwordValidator(String password){
         Pattern pattern = Pattern.compile(Regex.PASSWORD);
-        return pattern.matcher(password).matches();
+        boolean check =pattern.matcher(password).matches();
+        LOGGER.info("Password validation :"+check);
+        return check;
     }
 
     public boolean emailIdValidator(String emailId){
         Pattern pattern = Pattern.compile(Regex.EMAIL_ID);
-        return (pattern.matcher(emailId).matches() & !userDetailService.existEmailId(emailId));
-
+        boolean check =(pattern.matcher(emailId).matches() & !userDetailService.existEmailId(emailId));
+        LOGGER.info("EmailId Validation :"+ check);
+        return check;
     }
 
     public boolean mobileNoValidator(String mobileNo){
         Pattern pattern = Pattern.compile(Regex.MOBILE_NO);
-        return pattern.matcher(mobileNo).matches();
+        boolean check =pattern.matcher(mobileNo).matches();
+        LOGGER.info("mobile Number validation :"+check);
+        return check;
     }
 
     public boolean pinCodeValidator(int pinCode){
         Pattern pattern = Pattern.compile(Regex.PIN_CODE);
-        return pattern.matcher(String.valueOf(pinCode)).matches();
+        boolean check =pattern.matcher(String.valueOf(pinCode)).matches();
+        LOGGER.info("pinCode validation :"+check);
+        return check;
     }
 
 

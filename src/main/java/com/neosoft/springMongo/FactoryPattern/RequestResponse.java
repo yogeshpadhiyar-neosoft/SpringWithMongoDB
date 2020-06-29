@@ -6,9 +6,9 @@ import com.neosoft.springMongo.model.UserMaster;
 import com.neosoft.springMongo.requestEntity.AddressReqEntity;
 import com.neosoft.springMongo.requestEntity.UserDetailReqEntity;
 import com.neosoft.springMongo.requestEntity.UserMasterReqEntity;
-import com.neosoft.springMongo.responseEntity.AddressEntity;
-import com.neosoft.springMongo.responseEntity.UserDetailEntity;
 import com.neosoft.springMongo.responseEntity.UserMasterEntity;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -17,6 +17,7 @@ import java.util.List;
 
 @Component
 public class RequestResponse {
+    private static  final Logger LOGGER = LoggerFactory.getLogger(RequestResponse.class);
 
     /**
      * Convert UserRequest pojo  into Model class
@@ -24,7 +25,7 @@ public class RequestResponse {
      * @return
      */
     public static UserMaster userRequest(UserMasterEntity userMasterEntity){
-
+        LOGGER.info("Converting UserMasterEntity into UserMaster");
         List<Address> addressList = new ArrayList<>();
         userMasterEntity.getUserDetailEntity().getAddressEntityList().forEach(addressEntity -> {
             Address address = new Address();
@@ -62,7 +63,7 @@ public class RequestResponse {
      * @return
      */
     public static UserMasterReqEntity userResponse(UserMaster userMaster){
-
+        LOGGER.info("Converting UserMaster into UserMasterReqEntity : "+userMaster.getUserName());
         List<AddressReqEntity> addressReqEntities = new ArrayList<>();
         userMaster.getUserDetail().getAddressList().forEach(addressEntity -> {
             AddressReqEntity address = new AddressReqEntity();

@@ -7,15 +7,17 @@ import com.neosoft.springMongo.model.UserMaster;
 import com.neosoft.springMongo.responseEntity.UserMasterEntity;
 import com.neosoft.springMongo.service.UserDetailService;
 import com.neosoft.springMongo.service.UserMasterService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.UUID;
-
 @RestController
 @RequestMapping("/mongo/user")
 public class UserMasterController extends Validation{
+    private final Logger LOGGER = LoggerFactory.getLogger(UserMasterController.class);
+
     private final UserMasterService userMasterService;
 
     @Autowired
@@ -31,6 +33,7 @@ public class UserMasterController extends Validation{
      */
     @GetMapping()
     public ResponseEntity<Object> findAllUsers(){
+        LOGGER.info("Finding All registered user");
         ResponseEntity<Object> responseEntity;
         try {
             responseEntity = responseBuilder(userMasterService.findAll());
@@ -38,6 +41,7 @@ public class UserMasterController extends Validation{
             e.setErrorMessage(AllMessages.ANY_USER_NOT_FOUND);
             responseEntity = responseEx(e);
         }
+        LOGGER.info("Registered User:"+responseEntity);
         return responseEntity;
     }
 
@@ -48,6 +52,8 @@ public class UserMasterController extends Validation{
      */
     @PostMapping()
     public ResponseEntity<Object> insertUserMaster(@RequestBody UserMasterEntity userMasterEntity){
+        LOGGER.debug("Inserting  User");
+        LOGGER.info("Insert User (Input) :"+userMasterEntity);
         ResponseEntity<Object> responseEntity = null;
         try {
             if (valid(userMasterEntity)) {
@@ -57,6 +63,7 @@ public class UserMasterController extends Validation{
         }catch (CustomException e){
             responseEntity = responseEx(e);
         }
+        LOGGER.info("Inserted user : "+responseEntity);
         return responseEntity;
     }
 
@@ -68,12 +75,15 @@ public class UserMasterController extends Validation{
      */
     @GetMapping("/{userUUID}")
     public ResponseEntity<Object> findByUserUUID(@PathVariable("userUUID") String userUUID){
+        LOGGER.debug("Finding User By User ID");
+        LOGGER.info("Finding User by Id :"+userUUID);
         ResponseEntity<Object> responseEntity;
         try{
             responseEntity = responseBuilder(userMasterService.findByUserUUID(userUUID));
         }catch (CustomException e){
             responseEntity = responseEx(e);
         }
+        LOGGER.info("User is : "+responseEntity);
         return  responseEntity;
     }
 
@@ -86,6 +96,8 @@ public class UserMasterController extends Validation{
      */
     @PutMapping("/{userUUID}")
     public ResponseEntity<Object> updateByUserUUID(@PathVariable("userUUID") String userUUID, @RequestBody UserMasterEntity userMasterEntity ){
+        LOGGER.debug("Updating User");
+        LOGGER.info("Updating User ID : "+userUUID+ "\n Updating info :"+userMasterEntity);
         ResponseEntity<Object> responseEntity =null;
         try {
             if(valid(userMasterEntity)){
@@ -96,7 +108,7 @@ public class UserMasterController extends Validation{
         }catch (CustomException e){
             responseEntity = responseEx(e);
         }
-
+        LOGGER.info("Updated User :"+responseEntity);
         return responseEntity;
     }
 
@@ -108,6 +120,8 @@ public class UserMasterController extends Validation{
      */
     @DeleteMapping("/{userUUID}")
     public ResponseEntity<Object> deleteByUserUUID(@PathVariable("userUUID") String userUUID){
+        LOGGER.debug("deleting user ");
+        LOGGER.info("Deleting user Id :"+userUUID);
         ResponseEntity<Object> responseEntity;
         try {
             userMasterService.deleteByUserUUID(userUUID);
@@ -115,6 +129,7 @@ public class UserMasterController extends Validation{
         }catch (CustomException e){
             responseEntity = responseEx(e);
         }
+        LOGGER.info(AllMessages.USER_DELETED);
         return responseEntity;
     }
 }
