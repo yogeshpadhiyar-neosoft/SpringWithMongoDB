@@ -1,13 +1,14 @@
 package com.neosoft.springMongo.service;
 
-import com.neosoft.springMongo.model.UserDetail;
+import com.neosoft.springMongo.constant.AllMessages;
+import com.neosoft.springMongo.exception.CustomException;
 import com.neosoft.springMongo.model.UserMaster;
 import com.neosoft.springMongo.repository.UserMasterRepo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.UUID;
 
 @Service
 public class UserMasterServiceImpl implements UserMasterService{
@@ -20,8 +21,8 @@ public class UserMasterServiceImpl implements UserMasterService{
     }
 
     @Override
-    public UserMaster findByUserUUID(UUID userUUID) {
-        return userMasterRepo.findById(userUUID).orElse(null);
+    public UserMaster findByUserUUID(String userUUID) throws CustomException {
+        return userMasterRepo.findById(userUUID).orElseThrow(()-> new CustomException(HttpStatus.NO_CONTENT,AllMessages.NO_USER_FOUND));
     }
 
     @Override
@@ -30,8 +31,11 @@ public class UserMasterServiceImpl implements UserMasterService{
     }
 
     @Override
-    public List<UserMaster> findAll() {
-        return userMasterRepo.findAll();
+    public List<UserMaster> findAll() throws CustomException {
+        List<UserMaster> userMasterList =  userMasterRepo.findAll();
+        if(userMasterList.isEmpty())
+            throw new CustomException(HttpStatus.BAD_REQUEST, AllMessages.ANY_USER_NOT_FOUND);
+        return userMasterList;
     }
 
     @Override
@@ -40,7 +44,7 @@ public class UserMasterServiceImpl implements UserMasterService{
     }
 
     @Override
-    public void deleteByUserUUID(UUID userUUID) {
+    public void deleteByUserUUID(String userUUID) {
         userMasterRepo.deleteById(userUUID);
     }
 }

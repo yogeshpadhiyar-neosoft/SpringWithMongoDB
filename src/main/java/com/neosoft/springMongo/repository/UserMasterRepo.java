@@ -7,6 +7,6 @@ import org.springframework.stereotype.Repository;
 import java.util.UUID;
 
 @Repository
-public interface UserMasterRepo  extends MongoRepository<UserMaster , UUID> {
+public interface UserMasterRepo  extends MongoRepository<UserMaster , String> {
 
 }

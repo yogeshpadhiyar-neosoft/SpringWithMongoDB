@@ -1,20 +1,13 @@
-package com.neosoft.springMongo.model;
+package com.neosoft.springMongo.responseEntity;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
-
-import java.util.UUID;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Document
-public class Address {
-    @Id
-    private String addressId;
+public class AddressEntity {
     private String addressType;
     private String houseNo;
     private String society;
