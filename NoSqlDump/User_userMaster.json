@@ -1,0 +1,68 @@
+[
+  {
+    "_id": {"$oid": "5ef9934215958c383bbc63ec"},
+    "_class": "com.neosoft.springMongo.model.UserMaster",
+    "active": true,
+    "createdDate": {"$date": "2020-06-29T07:07:46.860Z"},
+    "password": "Yogesh@123",
+    "updatedDate": {"$date": "2020-06-29T07:07:46.860Z"},
+    "userDetail": {
+      "name": "yogesh",
+      "surName": "padhiyar",
+      "emailId": "test1@gmail.com",
+      "mobileNo": "7777996255",
+      "dateOfBirth": {"$date": "1999-05-03T00:00:00.000Z"},
+      "joinDate": {"$date": "2020-01-07T00:00:00.000Z"},
+      "addressList": [
+        {
+          "addressType": "Home",
+          "houseNo": "123-A",
+          "society": "santoshi",
+          "nearBy": "maruti chowk",
+          "pinCode": 395006
+        },
+        {
+          "addressType": "work",
+          "houseNo": "123-A",
+          "society": "santoshi",
+          "nearBy": "maruti chowk",
+          "pinCode": 395006
+        }
+      ]
+    },
+    "userName": "yogesh123"
+  },
+  {
+    "_id": {"$oid": "5ef993a315958c383bbc63ed"},
+    "_class": "com.neosoft.springMongo.model.UserMaster",
+    "active": true,
+    "createdDate": {"$date": "2020-06-29T07:09:23.682Z"},
+    "password": "Yogi@123",
+    "updatedDate": {"$date": "2020-06-29T07:09:23.682Z"},
+    "userDetail": {
+      "name": "yogi",
+      "surName": "padhiyar",
+      "emailId": "test12@gmail.com",
+      "mobileNo": "7777996255",
+      "dateOfBirth": {"$date": "1999-05-03T00:00:00.000Z"},
+      "joinDate": {"$date": "2020-01-07T00:00:00.000Z"},
+      "addressList": [
+        {
+          "addressType": "Home",
+          "houseNo": "123-A",
+          "society": "santoshi",
+          "nearBy": "maruti chowk",
+          "pinCode": 395006
+        },
+        {
+          "addressType": "work",
+          "houseNo": "123-A",
+          "society": "santoshi",
+          "nearBy": "maruti chowk",
+          "pinCode": 395006
+        }
+      ]
+    },
+    "userName": "yogi123"
+  }
+]
